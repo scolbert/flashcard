@@ -9,6 +9,7 @@
     </head>
     <body>
         <h1>Hello World!</h1>
+        <p>${attribute}
         <p>This is the homepage!</p>
     </body>
 </html>
