@@ -1,0 +1,45 @@
+package com.superpowersblog.flashcards.controller;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.superpowersblog.flashcards.service.Card;
+import com.superpowersblog.flashcards.service.CardsService;
+
+@Controller
+public class CardController {
+
+	EntityManagerFactory emf = Persistence.createEntityManagerFactory("flashcards");
+	
+	@RequestMapping(value="/addCard", method = RequestMethod.POST)
+	public ModelAndView addCard(
+			@RequestParam("front") String front,
+			@RequestParam("back") String back,
+			@RequestParam("contextCue") String contextCue
+			) 
+	{
+		EntityManager em = emf.createEntityManager();
+		CardsService service = new CardsService();
+		em.getTransaction().begin();
+		long id = service.createCard(front, back, contextCue, em);
+		em.getTransaction().commit();
+		
+		ModelAndView mav = new ModelAndView("cardAddedPage");
+		mav.addObject("cardId", String.valueOf(id));
+		em.close();
+		return mav;
+	}
+	
+	@RequestMapping(value="addCard", method = RequestMethod.GET)
+	public ModelAndView getAddCardPage() {
+		ModelAndView mav = new ModelAndView("addCard");
+		return mav;
+	}
+}

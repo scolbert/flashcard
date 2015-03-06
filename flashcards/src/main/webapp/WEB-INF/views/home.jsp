@@ -8,8 +8,10 @@
         <title>Home</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
-        <p>${attribute}
-        <p>This is the homepage!</p>
+		<h1>Front Page</h1>
+		<form action="addCard" method="get">
+			<input type="submit" value="Add Card" />
+		</form>
+        
     </body>
 </html>

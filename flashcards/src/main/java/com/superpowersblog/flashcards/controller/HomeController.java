@@ -2,6 +2,9 @@ package com.superpowersblog.flashcards.controller;
 
 import java.io.IOException;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,11 +15,12 @@ import org.springframework.web.servlet.mvc.AbstractController;
 
 @Controller
 public class HomeController{
+	EntityManagerFactory emf = Persistence.createEntityManagerFactory("flashcards");
+	EntityManager em = emf.createEntityManager();
 
 	@RequestMapping(value="/welcome")
 	public ModelAndView test(HttpServletResponse response) throws IOException{
 		ModelAndView mav = new ModelAndView("home");
-		mav.addObject("attribute", "This is a test");
 		return mav;
 	}
 }
