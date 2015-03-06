@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.superpowersblog.flashcards.service.Card;
 import com.superpowersblog.flashcards.service.CardsService;
 
 @Controller
@@ -20,15 +19,17 @@ public class CardController {
 	
 	@RequestMapping(value="/addCard", method = RequestMethod.POST)
 	public ModelAndView addCard(
-			@RequestParam("front") String front,
-			@RequestParam("back") String back,
+			@RequestParam("seeking") String seeking,
+			@RequestParam("details") String details,
+			@RequestParam("answer") String answer,
 			@RequestParam("contextCue") String contextCue
 			) 
 	{
+		
 		EntityManager em = emf.createEntityManager();
 		CardsService service = new CardsService();
 		em.getTransaction().begin();
-		long id = service.createCard(front, back, contextCue, em);
+		long id = service.createCard(seeking, details, answer, contextCue, em);
 		em.getTransaction().commit();
 		
 		ModelAndView mav = new ModelAndView("cardAddedPage");

@@ -9,13 +9,16 @@
 <body>
 	<form action="addCard" method="POST">
 		<label>Context Cue: </label>
-		<input type="text" name="contextCue" value="Enter A Context Cue"/><br/>
+		<input type="text" name="contextCue"/><br/>
 		
-		<label>Front</label>
-		<textarea name="front" rows="20" cols="50"></textarea><br/>
+		<label>Seeking</label>
+		<input type="text" name="seeking"/><br/>
 		
-		<label>Back</label>
-		<textarea name="back" rows="20" cols="50"></textarea><br/>
+		<label>Details</label>
+		<textarea name="details" rows="10" cols="50"></textarea><br/>
+		
+		<label>Answer</label>
+		<textarea name="answer" rows="10" cols="50"></textarea><br/>
 		
 		<input type="submit" value="Add Card"/>
 	</form>
