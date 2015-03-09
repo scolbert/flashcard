@@ -22,5 +22,7 @@
 		
 		<input type="submit" value="Add Card"/>
 	</form>
+	
+	<div>Successfully submitted card # : ${"id"}</div>
 </body>
 </html>

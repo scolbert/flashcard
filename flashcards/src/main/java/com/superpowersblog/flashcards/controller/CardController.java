@@ -32,14 +32,16 @@ public class CardController {
 		long id = service.createCard(seeking, details, answer, contextCue, em);
 		em.getTransaction().commit();
 		
-		ModelAndView mav = new ModelAndView("cardAddedPage");
+		ModelAndView mav = new ModelAndView("addCard");
 		mav.addObject("cardId", String.valueOf(id));
 		em.close();
 		return mav;
 	}
 	
 	@RequestMapping(value="addCard", method = RequestMethod.GET)
-	public ModelAndView getAddCardPage() {
+	public ModelAndView getAddCardPage(
+			@RequestParam("id") String previousCard
+			) {
 		ModelAndView mav = new ModelAndView("addCard");
 		return mav;
 	}

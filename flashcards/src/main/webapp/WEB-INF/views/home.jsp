@@ -11,6 +11,7 @@
 		<h1>Front Page</h1>
 		<form action="addCard" method="get">
 			<input type="submit" value="Add Card" />
+			<input type="hidden" name="id" value="0" />
 		</form>
         
     </body>
