@@ -1,8 +1,10 @@
 package com.superpowersblog.flashcards.controller;
 
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,8 +16,14 @@ import com.superpowersblog.flashcards.service.CardsService;
 
 @Controller
 public class CardController {
-
-	EntityManagerFactory emf = Persistence.createEntityManagerFactory("flashcards");
+	EntityManagerFactory factory = Persistence.createEntityManagerFactory("flashcards");
+	EntityManager em = factory.createEntityManager();
+	
+//	@PersistenceContext()
+//	EntityManager em;
+	
+	@Resource
+	CardsService service;
 	
 	@RequestMapping(value="/addCard", method = RequestMethod.POST)
 	public ModelAndView addCard(
@@ -26,15 +34,13 @@ public class CardController {
 			) 
 	{
 		
-		EntityManager em = emf.createEntityManager();
-		CardsService service = new CardsService();
 		em.getTransaction().begin();
 		long id = service.createCard(seeking, details, answer, contextCue, em);
 		em.getTransaction().commit();
 		
 		ModelAndView mav = new ModelAndView("addCard");
 		mav.addObject("cardId", String.valueOf(id));
-		em.close();
+//		em.close();
 		return mav;
 	}
 	

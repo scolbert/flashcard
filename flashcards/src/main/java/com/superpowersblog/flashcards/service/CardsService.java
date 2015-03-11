@@ -2,6 +2,9 @@ package com.superpowersblog.flashcards.service;
 
 import javax.persistence.EntityManager;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class CardsService {
 	public long createCard(String seeking, String details, String answer, String contextCue, EntityManager em) {
 		if(details.isEmpty()) {
