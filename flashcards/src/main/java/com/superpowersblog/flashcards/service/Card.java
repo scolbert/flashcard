@@ -7,7 +7,6 @@ import javax.persistence.TableGenerator;
 
 import org.springframework.stereotype.Repository;
 
-@Repository
 @Entity
 public class Card {
 	@Id
