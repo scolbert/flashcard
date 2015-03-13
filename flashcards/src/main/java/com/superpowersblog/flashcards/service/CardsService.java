@@ -1,6 +1,10 @@
 package com.superpowersblog.flashcards.service;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Service;
 
@@ -21,5 +25,15 @@ public class CardsService {
 		card.setContextCue(contextCue);
 		em.persist(card);
 		return card.getId();
+	}
+	
+	public List<Card> getCards(EntityManager em) {
+		if(em == null){
+			throw new IllegalArgumentException("Received invalid EntityManager");
+		}
+		
+		String queryString = "select c from Card c";
+		TypedQuery<Card> query = em.createQuery(queryString, Card.class);
+		return query.getResultList();
 	}
 }

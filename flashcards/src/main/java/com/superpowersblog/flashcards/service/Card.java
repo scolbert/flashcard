@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.TableGenerator;
+import javax.persistence.Transient;
 
 import org.springframework.stereotype.Repository;
 
@@ -46,6 +47,11 @@ public class Card {
 	}
 	public void setContextCue(String contextCue) {
 		this.contextCue = contextCue;
+	}
+	
+	@Transient
+	public String getFront() {
+		return this.getSeeking() + " : " + getDetails();
 	}
 
 }

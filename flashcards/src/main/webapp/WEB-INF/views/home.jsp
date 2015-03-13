@@ -13,6 +13,9 @@
 			<input type="submit" value="Add Card" />
 			<input type="hidden" name="id" value="0" />
 		</form>
+		<form action="getAllCards" method="get">
+			<input type="submit" value="Browse" />
+		</form>
         
     </body>
 </html>
