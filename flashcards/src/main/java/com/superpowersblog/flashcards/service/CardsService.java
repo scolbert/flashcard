@@ -36,4 +36,14 @@ public class CardsService {
 		TypedQuery<Card> query = em.createQuery(queryString, Card.class);
 		return query.getResultList();
 	}
+
+	public Card getCard(EntityManager em, long id) {
+		if(em == null) {
+			throw new IllegalArgumentException("Received invalid EntityManager");
+		}
+		
+		Card card = em.find(Card.class,  id);
+		
+		return card;
+	}
 }

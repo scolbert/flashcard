@@ -21,52 +21,92 @@ import com.superpowersblog.flashcards.service.CardsService;
 
 @Controller
 public class CardController {
-	EntityManagerFactory factory = Persistence.createEntityManagerFactory("flashcards");
+	EntityManagerFactory factory = Persistence
+			.createEntityManagerFactory("flashcards");
 	EntityManager em = factory.createEntityManager();
-	
-//	@PersistenceContext()
-//	EntityManager em;
-	
+
+	// @PersistenceContext()
+	// EntityManager em;
+
 	@Resource
 	CardsService service;
-	
-	@RequestMapping(value="/addCard", method = RequestMethod.POST)
-	public ModelAndView addCard(
-			@RequestParam("seeking") String seeking,
+
+	@RequestMapping(value = "/addCard", method = RequestMethod.POST)
+	public ModelAndView addCard(@RequestParam("seeking") String seeking,
 			@RequestParam("details") String details,
 			@RequestParam("answer") String answer,
-			@RequestParam("contextCue") String contextCue
-			) 
-	{
-		
-		em.getTransaction().begin();
+			@RequestParam("contextCue") String contextCue) {
+
+		if (!em.getTransaction().isActive()) {
+			em.getTransaction().begin();
+		}
 		long id = service.createCard(seeking, details, answer, contextCue, em);
 		em.getTransaction().commit();
-		
+
 		ModelAndView mav = new ModelAndView("addCard");
 		mav.addObject("id", String.valueOf(id));
-//		em.close();
+
 		return mav;
 	}
-	
-	@RequestMapping(value="addCardPage", method = RequestMethod.GET)
-	public ModelAndView getAddCardPage(
-			@RequestParam("id") String previousCard
-			) {
+
+	@RequestMapping(value = "addCardPage", method = RequestMethod.GET)
+	public ModelAndView getAddCardPage(@RequestParam("id") String previousCard) {
 		ModelAndView mav = new ModelAndView("addCard");
 		mav.addObject("id", previousCard);
 		return mav;
 	}
-	
-	@RequestMapping(value="/getAllCards", method = RequestMethod.GET)
-	public ModelAndView getCards(){
-		em.getTransaction().begin();
+
+	@RequestMapping(value = "/getAllCards", method = RequestMethod.GET)
+	public ModelAndView getCards() {
 		List<Card> cards = service.getCards(em);
-		
+
+		if (!em.getTransaction().isActive()) {
+			em.getTransaction().begin();
+		}
 		ModelAndView mav = new ModelAndView("browseCardsPage");
-			
 		mav.addObject("cards", cards);
+		
+		em.getTransaction().commit();
+
 		return mav;
 	}
-	
+
+	@RequestMapping(value = "/getAllCardsWithPreviousCard", method = RequestMethod.GET)
+	public ModelAndView getCards(@RequestParam("inputById") String inputById,
+			@RequestParam("inputByFront") String inputByFront,
+			@RequestParam("inputByAnswer") String inputByBack) {
+
+		String previousIdAsString = null;
+		// create one ID from the three parameters sent in.
+		// TODO I know there is a better way to do this. Find out how to set one parameter from the three HTML fields then fix this code
+		if (!inputById.isEmpty()) {
+			previousIdAsString = inputById;
+		} else if (!inputByFront.isEmpty()) {
+			previousIdAsString = inputByFront;
+		} else if (!inputByBack.isEmpty()) {
+			previousIdAsString = inputByBack;
+		} else {
+			throw new IllegalArgumentException("no previous id was received");
+		}
+		long previousCardId = Long.valueOf(previousIdAsString);
+		
+
+		if (!em.getTransaction().isActive()) {
+			em.getTransaction().begin();
+		}
+		
+		Card card = service.getCard(em, previousCardId);
+		String previousFront = card.getFront();
+		String previousBack = card.getAnswer();
+
+		ModelAndView mav = getCards();
+
+		mav.addObject("id", previousCardId);
+		mav.addObject("front", previousFront);
+		mav.addObject("answer", previousBack);
+
+		return mav;
+
+	}
+
 }

@@ -11,7 +11,7 @@
 		<h1>Front Page</h1>
 		<form action="addCardPage" method="get">
 			<input type="submit" value="Add Card" />
-			<input type="hidden" name="id" value="0" />
+			<input type="hidden" name="id" value="-1" />
 		</form>
 		<form action="getAllCards" method="get">
 			<input type="submit" value="Browse" />

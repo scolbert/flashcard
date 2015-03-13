@@ -34,18 +34,14 @@
 				document.getElementById("inputById").value="";
 
 			}
-
-
-
-
 						
-			<!-- oninput='document.getElementById("selectCardForm").submit()' -->
+			document.getElementById("selectCardForm").submit();
 		}
 	</script>
 </head>
 <body>
 	<h1>Select a card to view and edit it</h1>
-	<form id="selectCardForm">
+	<form id="selectCardForm" action="getAllCardsWithPreviousCard">
 		<datalist id="cardsById">
 			<c:forEach var="card" items="${cards}">
 				<option> ${card.getId()}</option>
@@ -53,33 +49,33 @@
 		</dataList>
 		<datalist id="cardsByFront">
 			<c:forEach var="card" items="${cards}">
-				<option> ${card.getFront()}</option>
+				<option value="${card.getId()}"> ${card.getFront()}</option>
 			</c:forEach>
 		</dataList>
 		<datalist id="cardsByAnswer">
 			<c:forEach var="card" items="${cards}">
-				<option> ${card.getAnswer()}</option>
+				<option value="${card.getId()}"> ${card.getAnswer()}</option>
 			</c:forEach>
 		</dataList>
 		
 		<label>Select Card By Id</label>
-		<input id="inputById" oninput='selectCard("by id selected")' list='cardsById'/>
+		<input id="inputById" name="inputById" oninput='selectCard("by id selected")' list='cardsById'/>
 		<label>Select Card By Details</label>
-		<input id="inputByFront" oninput='selectCard("by front selected")'  list="cardsByFront"/>
+		<input id="inputByFront" name="inputByFront" oninput='selectCard("by front selected")'  list="cardsByFront"/>
 		<label>Select Card By Answer</label>
-		<input id="inputByAnswer" oninput='selectCard("by answer selected")'  list="cardsByAnswer"/>
+		<input id="inputByAnswer" name="inputByAnswer" oninput='selectCard("by answer selected")'  list="cardsByAnswer"/>
 	</form>
 	<hr/>
 	<h1>Edit Fields</h1>
 	
 	<h3>CardId</h3>
-	<p id='cardId'></p>
+	<p id='cardId'>${id}</p>
 	
 	<h3>Card Front</h3>
-	<p id='cardFront'></p>
+	<p id='cardFront'>${front}</p>
 	
 	<h3>Answer</h3>
-	<p id='answer'></p>
+	<p id='answer'>${answer}</p>
 	
 </body>
 </html>
