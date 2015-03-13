@@ -39,16 +39,19 @@ public class CardController {
 		em.getTransaction().commit();
 		
 		ModelAndView mav = new ModelAndView("addCard");
-		mav.addObject("cardId", String.valueOf(id));
+		mav.addObject("id", String.valueOf(id));
 //		em.close();
 		return mav;
 	}
 	
-	@RequestMapping(value="addCard", method = RequestMethod.GET)
+	@RequestMapping(value="addCardPage", method = RequestMethod.GET)
 	public ModelAndView getAddCardPage(
 			@RequestParam("id") String previousCard
 			) {
 		ModelAndView mav = new ModelAndView("addCard");
+		mav.addObject("id", previousCard);
 		return mav;
 	}
+	
+	
 }

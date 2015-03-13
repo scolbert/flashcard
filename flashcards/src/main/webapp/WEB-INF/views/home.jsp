@@ -9,7 +9,7 @@
     </head>
     <body>
 		<h1>Front Page</h1>
-		<form action="addCard" method="get">
+		<form action="addCardPage" method="get">
 			<input type="submit" value="Add Card" />
 			<input type="hidden" name="id" value="0" />
 		</form>
