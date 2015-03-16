@@ -40,7 +40,7 @@
 	</script>
 </head>
 <body>
-	<h1>Select a card to view and edit it</h1>
+	<h1>Select A Card To View</h1>
 	<form id="selectCardForm" action="getAllCardsWithPreviousCard">
 		<datalist id="cardsById">
 			<c:forEach var="card" items="${cards}">
@@ -66,7 +66,7 @@
 		<input id="inputByAnswer" name="inputByAnswer" oninput='selectCard("by answer selected")'  list="cardsByAnswer"/>
 	</form>
 	<hr/>
-	<h1>Edit Fields</h1>
+	<h1>Selected Card</h1>
 	
 	<h3>CardId</h3>
 	<p id='cardId'>${id}</p>

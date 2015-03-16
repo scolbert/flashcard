@@ -5,9 +5,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Add a Card</title>
+
+	<script>
+		function submitCard(){
+			var cardId = ${id};
+			document.getElementById("status").innerHTML="Successfully Submitted Card # : " + cardId;
+			document.getElementById("addCardForm").submit();
+		}
+	</script>
+	
 </head>
 <body>
-	<form action="addCard" method="POST">
+	<form name="addCardForm" action="addCard" method="POST">
 		<label>Context Cue: </label>
 		<input type="text" name="contextCue"/><br/>
 		
@@ -20,9 +29,11 @@
 		<label>Answer</label>
 		<textarea name="answer" rows="10" cols="50"></textarea><br/>
 		
-		<input type="submit" value="Add Card"/>
+		<input type="button" onclick="submitCard()" value="Add Card" />
 	</form>
+	
 	<br/><br/>
-	<div>Successfully submitted card # : ${id}</div>
+	<div id="status"></div>
+	
 </body>
 </html>
